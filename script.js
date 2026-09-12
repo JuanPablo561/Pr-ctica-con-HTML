@@ -1,19 +1,8 @@
-/* =========================================================
-   script.js — Parte 2: funcionalidad del sitio con JavaScript
-   Se incluye en index.html, tags.html, profile.html y form.html
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   1. Login (solo corre si existen los elementos en la página,
-      así este mismo archivo se puede compartir en todo el sitio)
-   --------------------------------------------------------- */
-
-// Credenciales de prueba, ya que aún no hay un backend real
 const USUARIO_VALIDO = "admin";
 const PASSWORD_VALIDO = "1234";
 
 function validarLogin(event) {
-    event.preventDefault(); // evita que el formulario recargue la página
+    event.preventDefault(); 
 
     const usuario = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -26,7 +15,6 @@ function validarLogin(event) {
 
     if (usuario === USUARIO_VALIDO && password === PASSWORD_VALIDO) {
         mostrarMensajeLogin(mensaje, "Inicio de sesión exitoso. Redirigiendo...", "success");
-        // Pequeña espera para que el usuario alcance a leer el mensaje
         setTimeout(() => {
             window.location.href = "profile.html";
         }, 1200);
@@ -47,10 +35,6 @@ function inicializarLogin() {
         form.addEventListener("submit", validarLogin);
     }
 }
-
-/* ---------------------------------------------------------
-   2. Botones de ejemplo con funciones propias
-   --------------------------------------------------------- */
 
 function inicializarBotonesDemo() {
     const btnSaludo = document.getElementById("btn-saludo");
@@ -75,23 +59,15 @@ function inicializarBotonesDemo() {
     }
 }
 
-/* ---------------------------------------------------------
-   3. Página de formulario (form.html): radio buttons,
-      dropdowns de país/región y checkboxes
-   --------------------------------------------------------- */
-
 function inicializarRadioButtons() {
     const radios = document.querySelectorAll('input[name="contacto"]');
     const campoEmail = document.getElementById("campo-email");
     const campoTelefono = document.getElementById("campo-telefono");
 
-    if (radios.length === 0) return; // esta página no tiene el formulario
+    if (radios.length === 0) return; 
 
     radios.forEach((radio) => {
         radio.addEventListener("change", () => {
-            // Solo un radio button puede estar activo a la vez (comportamiento
-            // nativo por compartir el mismo "name"); aquí solo reaccionamos
-            // mostrando u ocultando el campo correspondiente.
             campoEmail.classList.add("d-none");
             campoTelefono.classList.add("d-none");
 
@@ -108,19 +84,16 @@ function inicializarDropdownsPaisRegion() {
     const selectPais = document.getElementById("select-pais");
     const selectRegion = document.getElementById("select-region");
 
-    // countryRegionData viene de data.js; si no existe, salimos
     if (!selectPais || typeof countryRegionData === "undefined") return;
 
-    // Llenamos el dropdown de países una sola vez
     countryRegionData.forEach((pais, index) => {
         const option = document.createElement("option");
-        option.value = index; // usamos el índice para encontrar el país luego
+        option.value = index; 
         option.textContent = pais.countryName;
         selectPais.appendChild(option);
     });
 
     selectPais.addEventListener("change", () => {
-        // Limpiamos el dropdown de regiones
         selectRegion.innerHTML = "";
 
         const indice = selectPais.value;
@@ -180,10 +153,6 @@ function inicializarEnvioFormulario() {
         mensaje.classList.remove("d-none");
     });
 }
-
-/* ---------------------------------------------------------
-   Inicialización general al cargar el DOM
-   --------------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
     inicializarLogin();
